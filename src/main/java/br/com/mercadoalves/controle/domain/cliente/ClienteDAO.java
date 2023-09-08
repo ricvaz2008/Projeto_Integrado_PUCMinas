@@ -1,4 +1,4 @@
-package br.com.mercadoalves.controle.cliente;
+package br.com.mercadoalves.controle.domain.cliente;
 
 import br.com.mercadoalves.controle.domain.estoque.Estoque;
 

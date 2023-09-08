@@ -5,12 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f072b292-6fef-4a81-84c1-903ebd61923a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/cliente/AdmCliente.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/cliente/Cliente.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/cliente/ClienteDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/cliente/ClienteService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/cliente/DadosCadastroCliente.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/cliente/DadosCliente.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/estoque/DadosCadastroEstoque.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/estoque/DadosCarrinho.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/estoque/Estoque.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/estoque/EstoqueDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/estoque/EstoqueService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/estoque/InformacoesCarrinho.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/itensVenda/DadosItensVenda.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/itensVenda/ItensVenda.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/itensVenda/ItensVendaDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/itensVenda/ItensVendaService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/usuario/DadosCadastroUsuario.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/usuario/Usuario.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/usuario/UsuarioDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/usuario/UsuarioService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/venda/ComprasPorCpf.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/venda/DadosComprasPorCpf.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/venda/DadosInformacoesCupom.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/venda/DadosVenda.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/venda/InformacoesCupom.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/venda/Venda.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/venda/VendaDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/venda/VendaService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$" beforeDir="false" afterPath="$PROJECT_DIR$" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -70,13 +86,21 @@
       <option name="project" value="LOCAL" />
       <updated>1694142885336</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Incluida a classe &quot;cliente&quot;">
+      <created>1694145954497</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1694145954498</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Primeiro commit backend" />
     <MESSAGE value="Atualizado ControleApplication" />
     <MESSAGE value="Atualizado arquivo de conexao com o servidor. Atualizado regra de negocios." />
-    <option name="LAST_COMMIT_MESSAGE" value="Atualizado arquivo de conexao com o servidor. Atualizado regra de negocios." />
+    <MESSAGE value="Incluida a classe &quot;cliente&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Incluida a classe &quot;cliente&quot;" />
   </component>
 </project>

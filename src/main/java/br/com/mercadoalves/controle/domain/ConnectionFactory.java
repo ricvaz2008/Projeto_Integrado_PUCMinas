@@ -1,4 +1,4 @@
-package br.com.mercadoalves.controle;
+package br.com.mercadoalves.controle.domain;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 

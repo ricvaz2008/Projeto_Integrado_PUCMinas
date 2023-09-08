@@ -1,4 +1,4 @@
-package br.com.mercadoalves.controle.cliente;
+package br.com.mercadoalves.controle.domain.cliente;
 
 import java.sql.Date;
 import java.util.Objects;

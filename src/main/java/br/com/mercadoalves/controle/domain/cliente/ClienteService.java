@@ -1,6 +1,6 @@
-package br.com.mercadoalves.controle.cliente;
+package br.com.mercadoalves.controle.domain.cliente;
 
-import br.com.mercadoalves.controle.ConnectionFactory;
+import br.com.mercadoalves.controle.domain.ConnectionFactory;
 
 import java.sql.Connection;
 import java.sql.Date;

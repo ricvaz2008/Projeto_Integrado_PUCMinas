@@ -1,4 +1,4 @@
-package br.com.mercadoalves.controle;
+package br.com.mercadoalves.controle.domain;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
