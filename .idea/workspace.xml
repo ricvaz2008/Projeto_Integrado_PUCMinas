@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f072b292-6fef-4a81-84c1-903ebd61923a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/ConnectionFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/RegraDeNegocioException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/cliente/AdmCliente.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/cliente/Cliente.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/cliente/ClienteDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/cliente/ClienteService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/cliente/DadosCadastroCliente.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/mercadoalves/controle/cliente/DadosCliente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$" beforeDir="false" afterPath="$PROJECT_DIR$" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,12 +63,20 @@
       <option name="project" value="LOCAL" />
       <updated>1694142191855</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Atualizado arquivo de conexao com o servidor. Atualizado regra de negocios.">
+      <created>1694142885336</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1694142885336</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Primeiro commit backend" />
     <MESSAGE value="Atualizado ControleApplication" />
-    <option name="LAST_COMMIT_MESSAGE" value="Atualizado ControleApplication" />
+    <MESSAGE value="Atualizado arquivo de conexao com o servidor. Atualizado regra de negocios." />
+    <option name="LAST_COMMIT_MESSAGE" value="Atualizado arquivo de conexao com o servidor. Atualizado regra de negocios." />
   </component>
 </project>
