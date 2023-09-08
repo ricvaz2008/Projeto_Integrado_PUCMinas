@@ -9,6 +9,7 @@ var numeroColunas = 7;
 var itensTela = 7;
 var quantidadeEdicao = 0;
 var pedido = {};
+var info = document.getElementById("maisInfo");
 
 criaTabela(coluna, ordem);
 
@@ -57,7 +58,6 @@ function escolheLinha(id) {
       break;
     }
   }
-  var info = document.getElementById("maisInfo");
 
   if (quantidadeEdicao == 1) {
     info.classList.remove("edicao_nao_ativo");
@@ -121,6 +121,8 @@ function criaTabela(coluna, ordem) {
           const cupom = item.cupom;
           const pagamento = item.pagamento;
           const newRow = [codigo, produto, valor, cpf, novaData, cupom, pagamento];
+          info.classList.add("edicao_nao_ativo");
+          quantidadeEdicao = 0;
           tabelaTransicao.push(newRow);
         }
       }
