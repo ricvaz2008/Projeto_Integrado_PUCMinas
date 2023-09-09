@@ -13,6 +13,8 @@ const tabelaItensVenda = document.getElementById("lista");
 const total = 0;
 const conteudoPopup = document.querySelector(".nv_popup_conteudo");
 const conteudoPagamento = document.querySelector(".nv_sair_pagamento");
+const carrinhoVazio = document.getElementById("nv_mensagem_carrinho_vazio");
+const processaPagamento = document.getElementById("nv_mensagem_finaliza_compra");
 const teclaNormal = document.querySelectorAll(`[class*="tecla_ativa"]`);
 const teclaEsc = document.querySelector(".tecla_esc");
 const teclaEnter = document.querySelector(".tecla_enter");
@@ -72,20 +74,41 @@ function carregarLista() {
 
 function pagamento() {
   conteudoPagamento.classList.remove("funcao_esconder");
-  teclaNormal.forEach(tecla => {
-    tecla.classList.add("funcao_esconder");
-  });
-  teclaEsc.classList.remove("funcao_esconder");
-  teclaEnter.classList.remove("funcao_esconder");
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      sairPagamento();
-    }
-    if (event.key === "Enter") {
-      event.preventDefault();
-      finalizaCompra();
-    }
-  });
+  if(tabelaItensVenda.rows.length > 0) {
+    processaPagamento.classList.remove("funcao_esconder");
+    carrinhoVazio.classList.add("funcao_esconder");
+    teclaNormal.forEach(tecla => {
+      tecla.classList.add("funcao_esconder");
+    });
+    teclaEsc.classList.remove("funcao_esconder");
+    teclaEnter.classList.remove("funcao_esconder");
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        sairPagamento();
+      }
+      if (event.key === "Enter") {
+        event.preventDefault();
+        finalizaCompra();
+      }
+    });
+  } else {
+    processaPagamento.classList.add("funcao_esconder");
+    carrinhoVazio.classList.remove("funcao_esconder");
+    teclaNormal.forEach(tecla => {
+      tecla.classList.add("funcao_esconder");
+    });
+    teclaEsc.classList.remove("funcao_esconder");
+    teclaEnter.classList.remove("funcao_esconder");
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        sairPagamento();
+      }
+      if (event.key === "Enter") {
+        event.preventDefault();
+        sairPagamento();
+      }
+    });
+  }
 }
 
 async function atualizaCampos(codProduto) {
@@ -126,19 +149,23 @@ function limpaTabela() {
 }
 
 function finalizaCompra() {
-  const linhasTabela = [];
-  const linhas = tabelaItensVenda.rows;
-  for (let i = 0; i < linhas.length; i++) {
-    const cells = linhas[i].cells;
-    const dadosDaLinha = [];
-    for (let j = 0; j < cells.length; j++) {
-      dadosDaLinha.push(cells[j].innerHTML);
+  if(tabelaItensVenda.rows.length > 0){
+    const linhasTabela = [];
+    const linhas = tabelaItensVenda.rows;
+    for (let i = 0; i < linhas.length; i++) {
+      const cells = linhas[i].cells;
+      const dadosDaLinha = [];
+      for (let j = 0; j < cells.length; j++) {
+        dadosDaLinha.push(cells[j].innerHTML);
+      }
+      linhasTabela.push(dadosDaLinha);
     }
-    linhasTabela.push(dadosDaLinha);
+    localStorage.setItem("tabelaVenda", JSON.stringify(linhasTabela));
+    localStorage.setItem("subtotal", JSON.stringify(subtotalCompra.value))
+    location.href = 'finaliza-venda.html';
+  }else {
+    sairPagamento();
   }
-  localStorage.setItem("tabelaVenda", JSON.stringify(linhasTabela));
-  localStorage.setItem("subtotal", JSON.stringify(subtotalCompra.value))
-  location.href = 'finaliza-venda.html';
 }
 
 codigoProduto.addEventListener("change", () => {
