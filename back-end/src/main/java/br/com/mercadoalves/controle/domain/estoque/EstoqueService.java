@@ -36,7 +36,6 @@ public class EstoqueService {
     }
 
     public void apagarEstoque(String codigo) {
-        System.out.println(codigo);
         Connection conn = connection.recuperarConexao();
         new EstoqueDAO(conn).apagarEstoque(codigo);
     }

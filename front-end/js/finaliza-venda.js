@@ -27,8 +27,8 @@ let saldoCompra = document.getElementById("fv_saldo_compra");
 let cpf = document.getElementById("fv_cpf_cliente");
 var cupom = 0;
 
-saldoCompra.value = JSON.parse(localStorage.getItem("subtotal"));
-
+let valorSaldo = JSON.parse(localStorage.getItem("subtotal"));
+saldoCompra.value = parseFloat(valorSaldo).toFixed(2);
 var tipoPagamento = "none";
 
 teclaEditar.classList.remove("funcao_esconder");
@@ -141,7 +141,7 @@ function pagamentoCartao() {
 
 function calculaTroco() {
   var valorPago = valorRecebido.value;
-  valorTroco.value = valorRecebido.value - saldoCompra.value;
+  valorTroco.value = (valorRecebido.value - saldoCompra.value).toFixed(2);
 }
 
 function editarLista() {
@@ -191,7 +191,9 @@ function sairPopup() {
 }
 
 function pagamentoRecebido() {
-  atualizaTabelaVendas();
+  if((tipoPagamento == "dinheiro" && valorTroco.value >= 0) || tipoPagamento == "cartao") {
+    atualizaTabelaVendas();
+  }
 }
 
 function atualizaTabelaVendas() {
@@ -219,18 +221,18 @@ function atualizaTabelaVendas() {
   enviarPedido(pedido)
   .then((finaliza) => finaliza.json())
   .then((finaliza) => {
-    atualizaTabelaItensVendidos();
+    atualizaQuantidadesEstoque();
   });
 }
 
-async function atualizaTabelaItensVendidos() {
+async function atualizaTabelaItensVendidos(lote) {
   const rowsArray = Array.from(tabelaItensVenda.rows);
   const itensArray = [];
   var numeroItem = 0;
 
   rowsArray.forEach((row) => {
     const quantidade = row.cells[3].innerHTML;
-    const codigo = row.cells[1].innerHTML;
+    const codigo = row.cells[1].innerHTML + "LOTE" + lote;
     const valor = row.cells[4].innerHTML;
 
     const item = {
@@ -255,7 +257,7 @@ async function atualizaTabelaItensVendidos() {
     const finaliza = await response.json();
 
     if (finaliza.status == "vendaFinalizada") {
-      atualizaQuantidadesEstoque();
+      location.href = 'venda-finalizada.html';
     }
   } catch (error) {
     console.error("Error:", error);
@@ -277,7 +279,7 @@ async function atualizaQuantidadesEstoque() {
 
     try {
       const produto = await receberResposta(pedidoEstoque);
-
+     
       const novaQuantidade = produto.quantidade - quantidade;
       const pedidoModificaEstoque = {
         action: "atualizaQuantidadeEstoque",
@@ -290,7 +292,7 @@ async function atualizaQuantidadesEstoque() {
           .then((resposta) => resposta.json())
           .then((statusCadastro) => {
             if (statusCadastro.message == "modificado") {
-              location.href = 'venda-finalizada.html';
+              atualizaTabelaItensVendidos(produto.lote);
             }
           })
           .catch((error) => {

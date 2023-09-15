@@ -1,7 +1,5 @@
 package br.com.mercadoalves.controle.domain;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
+
 import br.com.mercadoalves.controle.domain.cliente.AdmCliente;
 import br.com.mercadoalves.controle.domain.cliente.Cliente;
 import br.com.mercadoalves.controle.domain.cliente.ClienteService;
@@ -12,18 +10,24 @@ import br.com.mercadoalves.controle.domain.itensVenda.ItensVenda;
 import br.com.mercadoalves.controle.domain.itensVenda.ItensVendaService;
 import br.com.mercadoalves.controle.domain.usuario.Usuario;
 import br.com.mercadoalves.controle.domain.usuario.UsuarioService;
-import java.sql.Date;
-import java.math.BigDecimal;
-import java.net.InetSocketAddress;
-import java.util.ArrayList;
-import java.util.List;
-import br.com.mercadoalves.controle.domain.venda.*;
+import br.com.mercadoalves.controle.domain.venda.ComprasPorCpf;
+import br.com.mercadoalves.controle.domain.venda.DadosVenda;
+import br.com.mercadoalves.controle.domain.venda.InformacoesCupom;
+import br.com.mercadoalves.controle.domain.venda.VendaService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.net.InetSocketAddress;
+import java.nio.charset.StandardCharsets;
+import java.sql.Date;
+import java.util.List;
 
 public class ControleApplication {
 
@@ -158,7 +162,8 @@ public class ControleApplication {
                 String cargo = jsonNode.get("cargo").asText();
                 String login = jsonNode.get("login").asText();
                 String senha = jsonNode.get("senha").asText();
-                service.cadastrarUsuario(id, nome, cargo, login, senha);
+                String acesso = jsonNode.get("acesso").asText();
+                service.cadastrarUsuario(id, nome, cargo, login, senha, acesso);
                 response = "{\"status\": \"itemCadastrado\"}";
             }
 
@@ -469,7 +474,8 @@ public class ControleApplication {
                 String cargo = jsonNode.get("cargo").asText();
                 String login = jsonNode.get("login").asText();
                 String senha = jsonNode.get("senha").asText();
-                service.alterarUsuario(id, nome, cargo, login, senha);
+                String acesso = jsonNode.get("acesso").asText();
+                service.alterarUsuario(id, nome, cargo, login, senha, acesso);
                 String response = "{\"message\": \"modificado\"}";
 
                 exchange.getResponseHeaders().set("Content-Type", "application/json");
@@ -627,7 +633,7 @@ public class ControleApplication {
             Usuario informacoesUsuario = service.verificaNivelAcesso(usuario, senha);
             ObjectMapper objectMapper = new ObjectMapper();
             try {
-                return objectMapper.writeValueAsString(informacoesUsuario.getCargo());
+                return objectMapper.writeValueAsString(informacoesUsuario.getAcesso());
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
                 return "";

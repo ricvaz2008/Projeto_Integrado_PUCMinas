@@ -58,7 +58,6 @@ public class ItensVendaDAO {
 
         return itensVendas;
     }
-
     public void novoItensVendaBatch(List<ItensVenda> items) {
         String sql = "INSERT INTO itensvenda (cupom, numeroVenda, quantidade, codigo, valor) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {

@@ -99,14 +99,16 @@ async function atualizaCampos(codProduto) {
       valorVenda.value = produto.valor;
       endFoto.src = produto.foto;
       const descricao = produto.produto;
-      const codigoProduto = produto.codigo;
-      const quantidade = quantidadeItens.value;
-      const valor = (produto.valor).toFixed(2);
-      const total = quantidade * valor;
-      subtotal = subtotal + total;
+      const codigoCompleto = produto.codigo;
+      const codigoProduto = produto.codigo.split("LOTE")[0].trim();
+      const quantidade = new Number(quantidadeItens.value);
+      const valor = new Number(produto.valor.toFixed(2));
+      const total = new Number((quantidade * valor).toFixed(2));
+      subtotal = parseFloat((parseFloat(subtotal) + total).toFixed(2)).toFixed(2);
       indiceDaLinha++;
       numeroProduto.value = indiceDaLinha;
       tabelaTransicao = [indiceDaLinha, codigoProduto, descricao, quantidade, valor, total];
+      quantidadeItens.value = "1";
       var linha = tabelaItensVenda.insertRow(0);
       for (j = 0; j < itensTela; j++) {
         var cell1 = linha.insertCell(j);
@@ -114,7 +116,7 @@ async function atualizaCampos(codProduto) {
       }
       subtotalCompra.value = subtotal;
     });
-  codigoProduto.setAttribute("autofocus", "autofocus");
+    codigoProduto.setAttribute("autofocus", "autofocus");
 }
 
 function limpaTabela() {

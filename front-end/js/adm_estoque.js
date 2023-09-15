@@ -13,6 +13,7 @@ var tipo = "texto";
 var itensTela = 7;
 var quantidadeEdicao = 0;
 var pedido = {};
+var identificacaoVencimento = document.getElementById("notifica_vencimento");
 
 criaTabela(coluna, ordem);
 
@@ -54,14 +55,24 @@ function receberResposta(pedido) {
     });
 }
 
+function formataData(dataFormatada) {
+  const parts = dataFormatada.split('/');
+  if (parts.length === 3) {
+    const day = parts[0].padStart(2, '0');
+    const month = parts[1].padStart(2, '0');
+    const year = parts[2];
+    return `${month}/${day}/${year}`;
+  }
+  return dataCorreta;
+}
+
 function sinalizaVencimento(dias) {
   var hoje = new Date();
   var tamanho = tabelaResultante.rows.length;
   for (var i = 0; i < tamanho; i++) {
     var vencimento = tabelaResultante.rows[i].cells[5].innerHTML;
-    vencimento = vencimento.slice(3, 5) + "/" + vencimento.slice(0, 2) + "/" + vencimento.slice(5, 10);
-    vencimento = new Date(vencimento);
-    var prazoParaVencimento = (vencimento - hoje) / 1000 / 60 / 60 / 24;
+    var vencimentoFormatado = new Date (formataData(vencimento));
+    var prazoParaVencimento = (vencimentoFormatado - hoje) / 1000 / 60 / 60 / 24;
     if (prazoParaVencimento <= dias) {
       tabelaResultante.rows[i].cells[5].classList.add("edicao_vencido");
     } else {
@@ -103,7 +114,7 @@ function escolheLinha(id) {
 function marcaItem() {
   var selecao = document.querySelectorAll(".edita_linha");
   selecao.forEach(elemento => {
-    itemEditar = elemento.cells[0].innerHTML;
+    itemEditar = (elemento.cells[0].innerHTML) + "LOTE" + (elemento.cells[2].innerHTML);
   });
   return itemEditar;
 }
@@ -122,7 +133,7 @@ function editaItem() {
 function apagaItem() {
   var linhasSelecionadas = document.querySelectorAll(".edita_linha");
   linhasApagar = Array.from(linhasSelecionadas).map((element) => {
-    return element.cells[0].innerHTML;
+    return (element.cells[0].innerHTML) + "LOTE" + (element.cells[2].innerHTML);
   });
   tamanho = linhasApagar.length;
   for (var i = 0; i < tamanho; i++) {
@@ -149,6 +160,7 @@ function limpaTabela() {
     tabelaResultante.deleteRow(0);
   }
   tabelaTransicao = [[]];
+  identificacaoVencimento.value = "";
 }
 
 function criaTabela(coluna, ordem) {
@@ -262,6 +274,5 @@ organiza_col_seis.addEventListener("click", (event) => {
 });
 
 notifica_vencimento.addEventListener("change", (event) => {
-  var identificacaoVencimento = document.getElementById("notifica_vencimento");
   sinalizaVencimento(identificacaoVencimento.value);
 });

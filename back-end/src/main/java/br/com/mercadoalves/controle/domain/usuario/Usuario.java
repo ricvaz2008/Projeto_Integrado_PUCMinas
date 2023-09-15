@@ -8,6 +8,7 @@ public class Usuario {
     private String cargo;
     private String login;
     private String senha;
+    private String acesso;
 
     public Usuario(DadosCadastroUsuario dados) {
         this.id = dados.id();
@@ -15,9 +16,10 @@ public class Usuario {
         this.cargo = dados.cargo();
         this.login = dados.login();
         this.senha = dados.senha();
+        this.acesso = dados.acesso();
     }
 
-    public Usuario(String id, String nome, String cargo, String login, String senha) {
+    public Usuario(String id, String nome, String cargo, String login, String senha, String acesso) {
     }
 
     @Override
@@ -41,6 +43,7 @@ public class Usuario {
                 ", cargo='" + cargo + '\'' +
                 ", login='" + login + '\'' +
                 ", senha='" + senha + '\'' +
+                ", acesso='" + acesso + '\'' +
                 '}';
     }
 
@@ -63,4 +66,5 @@ public class Usuario {
     public String getSenha() {
         return senha;
     }
+    public String getAcesso() {return acesso;}
 }

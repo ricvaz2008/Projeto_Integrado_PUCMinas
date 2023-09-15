@@ -6,6 +6,7 @@ let teclaEnter = document.querySelector(".tecla_enter");
 let cpf = document.getElementById("cpf_cliente");
 let situacaoCadastro = document.getElementById("cliente_cadastro");
 let pedido = {};
+localStorage.removeItem("dadosCliente");
 
 function receberResposta(pedido) {
   const queryParams = new URLSearchParams(pedido).toString();
@@ -69,7 +70,7 @@ function sairPopup() {
 }
 
 function localizaCliente() {
-  if (cpf.value) {
+  if (!cpf.value) cpf.value = "000";
     const pedido = {
       action: "localizaCliente",
       cpf: cpf.value
@@ -91,9 +92,6 @@ function localizaCliente() {
         cliente = "cliente não cadastrado";
         iniciaVenda(cpf.value, cliente);
       });
-  } else {
-    location.href = 'nova-venda.html';
-  }
 }
 
 form.addEventListener("submit", (evento) => {

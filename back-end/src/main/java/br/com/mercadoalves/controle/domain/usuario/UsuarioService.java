@@ -26,9 +26,9 @@ public class UsuarioService {
         return new UsuarioDAO(conn).verificaNivelAcesso(usuario, senha);
     }
 
-    public void alterarUsuario(String id, String nome, String cargo, String login, String senha) {
+    public void alterarUsuario(String id, String nome, String cargo, String login, String senha, String acesso) {
         Connection conn = connection.recuperarConexao();
-        new UsuarioDAO(conn).alterarUsuario(id, nome, cargo, login, senha);
+        new UsuarioDAO(conn).alterarUsuario(id, nome, cargo, login, senha, acesso);
     }
 
     public void apagarUsuario(String id) {
@@ -36,8 +36,8 @@ public class UsuarioService {
         new UsuarioDAO(conn).apagarUsuario(id);
     }
 
-    public void cadastrarUsuario(String id, String nome, String cargo, String login, String senha) {
+    public void cadastrarUsuario(String id, String nome, String cargo, String login, String senha, String acesso) {
         Connection conn = connection.recuperarConexao();
-        new UsuarioDAO(conn).cadastrarUsuario(id, nome, cargo, login, senha);
+        new UsuarioDAO(conn).cadastrarUsuario(id, nome, cargo, login, senha, acesso);
     }
 }

@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.text.SimpleDateFormat;
 
 public class EstoqueDAO {
 
@@ -29,7 +30,10 @@ public class EstoqueDAO {
             resultSet = ps.executeQuery();
 
             while (resultSet.next()) {
-                String codigo = resultSet.getString(1);
+
+                String codigoCompleto = resultSet.getString(1);
+                String[] partes = codigoCompleto.split("LOTE");
+                String codigo = partes[0].trim();
                 String produto = resultSet.getString(2);
                 String lote = resultSet.getString(3);
                 Double quantidade = resultSet.getDouble(4);
@@ -58,8 +62,14 @@ public class EstoqueDAO {
         PreparedStatement ps;
         ResultSet resultSet;
         Estoque estoque = null;
+        String sql = "";
 
-        String sql = "SELECT * FROM estoque WHERE codigo = ?";
+        if (codigo.contains("LOTE")) {
+            sql = "SELECT * FROM estoque WHERE codigo = ?";
+        } else {
+            codigo = "%" + codigo + "%";
+            sql = "SELECT * FROM estoque WHERE codigo LIKE ? AND status = 'Ativo'";
+        }
 
         try {
             ps = conn.prepareStatement(sql);
@@ -68,6 +78,8 @@ public class EstoqueDAO {
 
             if (resultSet.next()) {
                 String codigoProduto = resultSet.getString(1);
+                //String[] partes = codigoCompleto.split("LOTE");
+                //String codigoProduto = partes[0].trim();
                 String produto = resultSet.getString(2);
                 String lote = resultSet.getString(3);
                 Double quantidade = resultSet.getDouble(4);
@@ -132,8 +144,9 @@ public class EstoqueDAO {
 
     public void alterarQuantidadeEstoque(String codigo, Double quantidade) {
         PreparedStatement ps;
+        codigo = "%" + codigo + "%";
 
-        String sql = "UPDATE estoque SET quantidade = ? WHERE codigo = ?";
+        String sql = "UPDATE estoque SET quantidade = ? WHERE codigo LIKE ? AND status = 'Ativo'";
 
         try {
             conn.setAutoCommit(false);
@@ -167,12 +180,9 @@ public class EstoqueDAO {
         PreparedStatement ps;
 
         String sql = "DELETE FROM estoque WHERE codigo = ?";
-
         try {
             ps = conn.prepareStatement(sql);
-
             ps.setString(1, codigo);
-
             ps.execute();
             ps.close();
             conn.close();
@@ -183,26 +193,33 @@ public class EstoqueDAO {
 
     public void cadastrarEstoque(String codigo, String produto, String lote, Double quantidade, BigDecimal valor, Date vencimento, String status, String foto) {
         PreparedStatement ps;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String novoCodigo = codigo + "LOTE" + lote;
+        Estoque itemExistente = listarEstoquePorCodigo(codigo);
+        if(itemExistente != null){
+            Double novaQuantidade = quantidade + itemExistente.getQuantidade();
+            alterarQuantidadeEstoque(codigo,novaQuantidade);
+        }else {
+            String sql = "INSERT INTO estoque (codigo, produto, lote, quantidade, valor, vencimento, status, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        String sql = "INSERT INTO estoque (codigo, produto, lote, quantidade, valor, vencimento, status, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            try {
+                ps = conn.prepareStatement(sql);
 
-        try {
-            ps = conn.prepareStatement(sql);
+                ps.setString(1, novoCodigo);
+                ps.setString(2, produto);
+                ps.setString(3, lote);
+                ps.setDouble(4, quantidade);
+                ps.setBigDecimal(5, valor);
+                ps.setDate(6, vencimento);
+                ps.setString(7, status);
+                ps.setString(8, foto);
 
-            ps.setString(1, codigo);
-            ps.setString(2, produto);
-            ps.setString(3, lote);
-            ps.setDouble(4, quantidade);
-            ps.setBigDecimal(5, valor);
-            ps.setDate(6, vencimento);
-            ps.setString(7, status);
-            ps.setString(8, foto);
-
-            ps.execute();
-            ps.close();
-            conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+                ps.execute();
+                ps.close();
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ let novoCargo = document.getElementById("cargoFuncionario");
 let novoLogin = document.getElementById("loginFuncionario");
 let novaSenha = document.getElementById("senhaFuncionario");
 var indexador = JSON.parse(localStorage.getItem("idDetalhe"));
+let novoAcesso = document.getElementById("acesso");
 
 encontraItem();
 
@@ -52,12 +53,12 @@ function encontraItem() {
   };
   receberResposta(pedido)
     .then(produto => {
-      console.log(produto.nome);
       novoNome.value = produto.nome;
       novoID.value = produto.id;
       novoCargo.value = produto.cargo;
       novoLogin.value = produto.login;
       novaSenha.value = produto.senha;
+      novoAcesso.value = produto.acesso;
     });
 }
 
@@ -68,7 +69,8 @@ function confirmaCadastro() {
     nome: novoNome.value,
     cargo: novoCargo.value,
     login: novoLogin.value,
-    senha: novaSenha.value
+    senha: novaSenha.value,
+    acesso: novoAcesso.value
   };
   mudarPedido(pedido)
     .then((resposta) => resposta.json())

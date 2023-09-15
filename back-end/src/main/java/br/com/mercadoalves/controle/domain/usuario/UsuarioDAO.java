@@ -33,12 +33,13 @@ public class UsuarioDAO {
                 String cargo = resultSet.getString(3);
                 String login = resultSet.getString(4);
                 String senha = resultSet.getString(5);
+                String acesso = resultSet.getString(6);
 
-                if (id == null || nome == null || cargo == null || login == null || senha == null) {
+                if (id == null || nome == null || cargo == null || login == null || senha == null || acesso == null) {
                     continue;
                 }
 
-                DadosCadastroUsuario dadosCadastroUsuarios = new DadosCadastroUsuario(id, nome, cargo, login, senha);
+                DadosCadastroUsuario dadosCadastroUsuarios = new DadosCadastroUsuario(id, nome, cargo, login, senha, acesso);
                 Usuario usuario = new Usuario(dadosCadastroUsuarios);
                 usuarios.add(usuario);
             }
@@ -68,9 +69,10 @@ public class UsuarioDAO {
                 String cargo = resultSet.getString(3);
                 String login = resultSet.getString(4);
                 String senha = resultSet.getString(5);
+                String acesso = resultSet.getString(6);
 
-                if (nome != null && cargo != null && login != null && senha != null) {
-                    DadosCadastroUsuario dadosCadastroUsuarios = new DadosCadastroUsuario(userId, nome, cargo, login, senha);
+                if (nome != null && cargo != null && login != null && senha != null && acesso != null) {
+                    DadosCadastroUsuario dadosCadastroUsuarios = new DadosCadastroUsuario(userId, nome, cargo, login, senha, acesso);
                     usuario = new Usuario(dadosCadastroUsuarios);
                 }
             }
@@ -84,12 +86,12 @@ public class UsuarioDAO {
         return usuario;
     }
 
-    public void alterarUsuario(String id, String nome, String cargo, String login, String senha) {
+    public void alterarUsuario(String id, String nome, String cargo, String login, String senha, String acesso) {
         PreparedStatement ps;
         ResultSet resultSet;
         Usuario usuario = null;
 
-        String sql = "UPDATE usuarios SET nome = ?, cargo = ?, login = ?, senha = ? WHERE id = ?";
+        String sql = "UPDATE usuarios SET nome = ?, cargo = ?, login = ?, senha = ?, acesso = ? WHERE id = ?";
 
         try {
             conn.setAutoCommit(false);
@@ -100,8 +102,8 @@ public class UsuarioDAO {
             ps.setString(2, cargo);
             ps.setString(3, login);
             ps.setString(4, senha);
-            ps.setString(5, id);
-
+            ps.setString(5, acesso);
+            ps.setString(6, id);
             ps.execute();
             ps.close();
             conn.commit();
@@ -158,13 +160,14 @@ public class UsuarioDAO {
                 String userId = resultSet.getString(1);
                 String nome = resultSet.getString(2);
                 String cargo = resultSet.getString(3);
+                String acesso = resultSet.getString(6);
 
-                if (userId != null && nome != null && cargo != null) {
-                    DadosCadastroUsuario dadosCadastroUsuarios = new DadosCadastroUsuario(userId, nome, cargo, login, senha);
+                if (userId != null && nome != null && cargo != null && acesso != null) {
+                    DadosCadastroUsuario dadosCadastroUsuarios = new DadosCadastroUsuario(userId, nome, cargo, login, senha, acesso);
                     usuario = new Usuario(dadosCadastroUsuarios);
                 }
             } else {
-                usuario = new Usuario(new DadosCadastroUsuario("0", "Incorrect", "Incorrect", "", ""));
+                usuario = new Usuario(new DadosCadastroUsuario("0", "Incorrect", "Incorrect", "", "", ""));
             }
 
             resultSet.close();
@@ -176,12 +179,12 @@ public class UsuarioDAO {
         return usuario;
     }
 
-    public void cadastrarUsuario(String id, String nome, String cargo, String login, String senha) {
+    public void cadastrarUsuario(String id, String nome, String cargo, String login, String senha, String acesso) {
         PreparedStatement ps;
         ResultSet resultSet;
         Usuario usuario = null;
 
-        String sql = "INSERT INTO usuarios (id, nome, cargo, login, senha) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO usuarios (id, nome, cargo, login, senha, acesso) VALUES (?, ?, ?, ?, ?, ?)";
 
         try {
             ps = conn.prepareStatement(sql);
@@ -191,6 +194,7 @@ public class UsuarioDAO {
             ps.setString(3, cargo);
             ps.setString(4, login);
             ps.setString(5, senha);
+            ps.setString(6, acesso);
 
             ps.execute();
             ps.close();

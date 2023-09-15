@@ -5,8 +5,9 @@ var ordem_zero = "ASC";
 var ordem_um = "ASC";
 var ordem_dois = "ASC";
 var ordem_tres = "ASC";
+var ordem_quatro = "ASC";
 var numeroColunas = 5;
-var itensTela = 5;
+var itensTela = 6;
 var quantidadeEdicao = 0;
 var pedido = {};
 
@@ -115,9 +116,9 @@ function apagaItem() {
     };
     deletarPedido(pedido)
     quantidadeEdicao = 0;
-    limpaTabela();
-    criaTabela(coluna, ordem);
   }
+  limpaTabela();
+  criaTabela(coluna, ordem);
 }
 
 function limpaTabela() {
@@ -149,7 +150,8 @@ function criaTabela(coluna, ordem) {
           const cargo = item.cargo;
           const login = item.login;
           const senha = item.senha;
-          const newRow = [id, nome, cargo, login, senha];
+          const acesso = item.acesso;
+          const newRow = [id, nome, cargo, login, senha, acesso];
           tabelaTransicao.push(newRow);
         }
       }
@@ -204,6 +206,16 @@ organiza_col_tres.addEventListener("click", (event) => {
   if (ordem_tres == "ASC") ordem_tres = "DESC";
   else ordem_tres = "ASC";
   ordem = ordem_tres;
+  limpaTabela();
+  criaTabela(coluna, ordem);
+});
+
+organiza_col_quatro.addEventListener("click", (event) => {
+  coluna = "login";
+
+  if (ordem_quatro == "ASC") ordem_quatro = "DESC";
+  else ordem_quatro = "ASC";
+  ordem = ordem_quatro;
   limpaTabela();
   criaTabela(coluna, ordem);
 });

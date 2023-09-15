@@ -3,6 +3,7 @@ let novoId = document.getElementById("idFuncionario");
 let novoCargo = document.getElementById("cargoFuncionario");
 let novoLogin = document.getElementById("loginFuncionario");
 let novaSenha = document.getElementById("senhaFuncionario");
+let novoAcesso = document.getElementById("acesso");
 
 function enviarMensagem(pedido) {
   const url = 'http://localhost:3000/';
@@ -31,6 +32,7 @@ function confirmaCadastro() {
     cargo: novoCargo.value,
     login: novoLogin.value,
     senha: novaSenha.value,
+    acesso: novoAcesso.value,
   };
   enviarMensagem(pedido)
     .then((resposta) => resposta.json())

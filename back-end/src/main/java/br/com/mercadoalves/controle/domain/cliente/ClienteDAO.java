@@ -40,7 +40,6 @@ public class ClienteDAO {
                 "LEFT JOIN " +
                 "    LatestSales LS ON c.cpf = LS.cpf AND LS.rn = 1 " +
                 "ORDER BY " + coluna + " " + ordem;
-        System.out.println(sql);
 
         try {
             ps = conn.prepareStatement(sql);
@@ -80,7 +79,6 @@ public class ClienteDAO {
         try {
             ps = conn.prepareStatement(sql);
             ps.setString(1, cpf);
-            System.out.println(cpf);
             resultSet = ps.executeQuery();
 
             if (resultSet.next()) {
@@ -115,7 +113,6 @@ public class ClienteDAO {
         Estoque estoque = null;
 
         String sql = "UPDATE clientes SET nome = ?, nascimento = ?, telefone = ?, email = ?, endereco = ?, cidade = ?, estado = ?, cep = ? WHERE cpf = ?";
-        System.out.println(sql);
 
         try {
             conn.setAutoCommit(false);
@@ -158,8 +155,6 @@ public class ClienteDAO {
         Cliente cliente = null;
 
         String sql = "DELETE FROM clientes WHERE cpf = ?";
-        System.out.println(sql);
-
         try {
             ps = conn.prepareStatement(sql);
 
@@ -179,7 +174,6 @@ public class ClienteDAO {
         Cliente cliente = null;
 
         String sql = "INSERT INTO clientes (cpf, nome, nascimento, telefone, email, endereco, cidade, estado, cep) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        System.out.println(sql);
         try {
             ps = conn.prepareStatement(sql);
 

@@ -43,6 +43,7 @@ form.addEventListener("submit", (evento) => {
   receberResposta(pedido)
     .then(acesso => {
       acesso = acesso.toUpperCase();
+      if (acesso == "FUNCIONÁRIO") acesso = "FUNCIONARIO";
       if (acesso === "ADMINISTRADOR" || acesso === "FUNCIONARIO") {
         localStorage.setItem("caixa", JSON.stringify(evento.target.elements['nome_usuario'].value));
         localStorage.setItem("acesso", JSON.stringify(acesso));

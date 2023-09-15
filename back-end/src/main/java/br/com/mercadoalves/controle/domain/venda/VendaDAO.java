@@ -14,22 +14,30 @@ public class VendaDAO {
     }
 
     public List<DadosVenda> listarVendas(String coluna, String ordem) {
-        PreparedStatement ps;
-        ResultSet resultSet;
+        String sql;
+        if ("valor".equals(coluna)) {
+            sql = "SELECT i.codigo, e.produto, i.valor, v.cpf, v.data, i.cupom, v.pagamento\n" +
+                    "FROM itensvenda i\n" +
+                    "JOIN vendas v ON i.numeroVenda = v.numeroVenda\n" +
+                    "JOIN estoque e ON i.codigo = e.codigo\n" +
+                    "ORDER BY CAST(i.valor AS DECIMAL) " + ordem;
+        } else {
+            sql = "SELECT i.codigo, e.produto, i.valor, v.cpf, v.data, i.cupom, v.pagamento\n" +
+                    "FROM itensvenda i\n" +
+                    "JOIN vendas v ON i.numeroVenda = v.numeroVenda\n" +
+                    "JOIN estoque e ON i.codigo = e.codigo\n" +
+                    "ORDER BY " + coluna + " " + ordem;
+        }
+
         List<DadosVenda> vendas = new ArrayList<>();
 
-        String sql = "SELECT i.codigo, e.produto, i.valor, v.cpf, v.data, i.cupom, v.pagamento\n" +
-                "FROM itensvenda i\n" +
-                "JOIN vendas v ON i.numeroVenda = v.numeroVenda\n" +
-                "JOIN estoque e ON i.codigo = e.codigo\n" +
-                "ORDER BY " + coluna + " " + ordem;
-
-        try {
-            ps = conn.prepareStatement(sql);
-            resultSet = ps.executeQuery();
+        try (PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet resultSet = ps.executeQuery()) {
 
             while (resultSet.next()) {
-                String codigo = resultSet.getString(1);
+                String codigoCompleto = resultSet.getString(1);
+                String[] partes = codigoCompleto.split("LOTE");
+                String codigo = partes[0].trim();
                 String produto = resultSet.getString(2);
                 BigDecimal valor = resultSet.getBigDecimal(3);
                 String cpf = resultSet.getString(4);
@@ -37,19 +45,15 @@ public class VendaDAO {
                 String cupom = resultSet.getString(6);
                 String pagamento = resultSet.getString(7);
 
-                if (codigo == null || produto == null || valor == null || cpf == null || data == null || cupom == null || pagamento == null) {
-                    continue;
+                if (codigo != null && produto != null && valor != null && cpf != null && data != null && cupom != null && pagamento != null) {
+                    DadosVenda dadosVenda = new DadosVenda(codigo, produto, valor, cpf, data, cupom, pagamento);
+                    vendas.add(dadosVenda);
                 }
-
-                DadosVenda dadosVenda = new DadosVenda(codigo, produto, valor, cpf, data, cupom, pagamento);
-                Venda venda = new Venda(dadosVenda);
-                vendas.add(dadosVenda);
             }
-            resultSet.close();
-            ps.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
         return vendas;
     }
 
