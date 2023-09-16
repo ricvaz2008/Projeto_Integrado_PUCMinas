@@ -225,27 +225,8 @@ function atualizaTabelaVendas() {
   });
 }
 
-async function atualizaTabelaItensVendidos(lote) {
-  const rowsArray = Array.from(tabelaItensVenda.rows);
-  const itensArray = [];
-  var numeroItem = 0;
-
-  rowsArray.forEach((row) => {
-    const quantidade = row.cells[3].innerHTML;
-    const codigo = row.cells[1].innerHTML + "LOTE" + lote;
-    const valor = row.cells[4].innerHTML;
-
-    const item = {
-      quantidade: quantidade,
-      codigo: codigo,
-      valor: valor,
-      cupom: cupom + "-" + numeroItem
-    };
-
-    itensArray.push(item);
-    numeroItem += 1;
-  });
-
+async function atualizaTabelaItensVendidos(itensArray) {
+  
   const pedido = {
     action: "novoItensVenda",
     numeroVenda: numeroVenda,
@@ -267,6 +248,8 @@ async function atualizaTabelaItensVendidos(lote) {
 async function atualizaQuantidadesEstoque() {
   const rowsArray = Array.from(tabelaItensVenda.rows);
   const promises = [];
+  const itensArray = [];
+  var numeroItem = 0;
 
   rowsArray.forEach(async (row) => {
     const quantidade = parseInt(row.cells[3].innerHTML, 10);
@@ -292,7 +275,19 @@ async function atualizaQuantidadesEstoque() {
           .then((resposta) => resposta.json())
           .then((statusCadastro) => {
             if (statusCadastro.message == "modificado") {
-              atualizaTabelaItensVendidos(produto.lote);
+              const quantidade = row.cells[3].innerHTML;
+              const codigo = row.cells[1].innerHTML + "LOTE" + produto.lote;
+              const valor = row.cells[4].innerHTML;
+
+              const item = {
+                quantidade: quantidade,
+                codigo: codigo,
+                valor: valor,
+                cupom: cupom + "-" + numeroItem
+              };
+
+              atualizaTabelaItensVendidos(item);
+              numeroItem += 1;
             }
           })
           .catch((error) => {
