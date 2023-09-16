@@ -115,24 +115,16 @@ public class ControleApplication {
                 ItensVendaService service = new ItensVendaService();
                 ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode jsonNode = objectMapper.readTree(requestBody);
-
                 String numeroVenda = jsonNode.get("numeroVenda").asText();
-
                 JsonNode itensArray = jsonNode.get("itens");
-                if (itensArray.isArray()) {
-                    for (JsonNode itemNode : itensArray) {
-                        String quantidade = itemNode.get("quantidade").asText();
-                        String codProduto = itemNode.get("codigo").asText();
-                        String valorTexto = itemNode.get("valor").asText();
-                        String cupom = itemNode.get("cupom").asText();
-                        BigDecimal valor = new BigDecimal(valorTexto);
-
-                        service.novoItensVenda(quantidade, codProduto, valor, cupom, numeroVenda);
-                    }
-                }
-
+                String quantidade = itensArray.get("quantidade").asText();
+                String codProduto = itensArray.get("codigo").asText();
+                String valorTexto = itensArray.get("valor").asText();
+                String cupom = itensArray.get("cupom").asText();
+                BigDecimal valor = new BigDecimal(valorTexto);
+                service.novoItensVenda(quantidade, codProduto, valor, cupom, numeroVenda);
                 response = "{\"status\": \"vendaFinalizada\"}";
-            }
+                }
 
             if ("novoItemEstoque".equals(action)) {
                 EstoqueService service = new EstoqueService();

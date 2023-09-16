@@ -1,5 +1,7 @@
 package br.com.mercadoalves.controle.domain.itensVenda;
 
+import br.com.mercadoalves.controle.domain.venda.Venda;
+
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
@@ -58,23 +60,22 @@ public class ItensVendaDAO {
 
         return itensVendas;
     }
-    public void novoItensVendaBatch(List<ItensVenda> items) {
-        String sql = "INSERT INTO itensvenda (cupom, numeroVenda, quantidade, codigo, valor) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            for (ItensVenda item : items) {
-                ps.setString(1, item.getCupom());
-                ps.setString(2, item.getNumeroVenda());
-                ps.setInt(3, item.getQuantidade());
-                ps.setString(4, item.getCodigo());
-                ps.setBigDecimal(5, item.getValor());
-                ps.addBatch();
-            }
+    public void novoItensVenda(String quantidade, String codProduto, BigDecimal valor, String cupom, String numeroVenda){
+        PreparedStatement ps;
+        ResultSet resultSet;
 
-            int[] batchResults = ps.executeBatch();
-            for (int i = 0; i < batchResults.length; i++) {
-                if (batchResults[i] == Statement.EXECUTE_FAILED) {
-                }
-            }
+        String sql = "INSERT INTO itensvenda (cupom, numeroVenda, quantidade, codigo, valor) VALUES (?, ?, ?, ?, ?)";
+        try {
+            ps = conn.prepareStatement(sql);
+
+            ps.setString(1, cupom);
+            ps.setString(2, numeroVenda);
+            ps.setString(3, quantidade);
+            ps.setString(4, codProduto);
+            ps.setBigDecimal(5, valor);
+
+            ps.executeUpdate();
+            conn.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

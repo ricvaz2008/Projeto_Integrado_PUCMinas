@@ -195,7 +195,7 @@ public class EstoqueDAO {
         PreparedStatement ps;
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String novoCodigo = codigo + "LOTE" + lote;
-        Estoque itemExistente = listarEstoquePorCodigo(codigo);
+        Estoque itemExistente = listarEstoquePorCodigo(novoCodigo);
         if(itemExistente != null){
             Double novaQuantidade = quantidade + itemExistente.getQuantidade();
             alterarQuantidadeEstoque(codigo,novaQuantidade);
