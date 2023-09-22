@@ -186,6 +186,7 @@ public class ControleApplication {
             if ("verificaAcesso".equals(action)) {
                 String login = getRequestParamValue(requestURI, "usuario");
                 String senha = getRequestParamValue(requestURI, "senha");
+                System.out.println(login);
                 String response = verificaNivelAcesso(login, senha);
                 exchange.getResponseHeaders().set("Content-Type", "application/json; charset=utf-8");
                 byte[] responseBytes = response.getBytes(StandardCharsets.UTF_8);

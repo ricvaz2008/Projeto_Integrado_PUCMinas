@@ -4,20 +4,19 @@ const statusComunicacao = document.getElementById("erro_autorizacao");
 
 function receberResposta(pedido) {
   const queryParams = new URLSearchParams(pedido).toString();
-  const url = `http://localhost:3000?${queryParams}`;
-
+  const url = `https://app-back-end-230918185103.azurewebsites.net?${queryParams}`;
   return fetch(url, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
     },
   })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Erro na requisição. Status: ${response.status}`);
-      }
-      return response.json().catch(() => response.text());
-    })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`Erro na requisição. Status: ${response.status}`);
+    }
+    return response.json().catch(() => response.text());
+  })
     .then(data => {
       if (data) {
         return data;
